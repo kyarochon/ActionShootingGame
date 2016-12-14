@@ -6,49 +6,65 @@ namespace Mega.Battle.Controller {
 	public class Enemy : Character {
 
 
-		protected float moveDuration = 3.0f;
-		protected float commandDuration = 2.0f;
+		protected float moveDuration   = 0.0f;
+		protected float jumpDuration   = 0.0f;
+		protected float bulletDuration = 0.0f;
+		protected EnemyParam enemyParam;
 
+		public void Init(EnemyParam param) {
+			faceDirection = Direction2D.Left;
 
-		// Use this for initialization
-		new void Start () {
-			turnForce = 300.0f;
+			this.enemyParam = param;
+			this.hp = param.hp;
+			this.attack = param.attack;
+			this.upForce = param.upForce;
+			this.turnForce = param.turnForce;
+			this.transform.localScale = new Vector3 (param.scale, param.scale, param.scale);
 
-			base.Start ();
+			this.moveDuration   = param.moveDuration;
+			this.jumpDuration   = param.jumpDuration;
+			this.bulletDuration = param.bulletDuration;
 		}
-
-		// Update is called once per frame
-		new void Update () {
-			if (moveDuration > 0) {
+			
+		protected override void Update () {
+			if (moveDuration > 0.0f) {
 				moveDuration -= Time.deltaTime;
-			} else {
-				this.moveDirection = (Direction2D)Random.Range (0, 3);
-				moveDuration = 5.0f;
-			}
-
-
-			if (commandDuration > 0) {
-				commandDuration -= Time.deltaTime;
-				commandJump = false;
-				commandBullet = false;
-			} else {
-				int random = Random.Range (0, 2);
-				if (random == 0) {
-					commandJump = true;
-				} else if (random == 1) {
-					commandBullet = true;
+				if (moveDuration <= 0.0f) {
+					this.moveDirection = (Direction2D)Random.Range (0, 3);
+					moveDuration = this.enemyParam.moveDuration;
 				}
-				commandDuration = 2.0f;
 			}
 
+			commandJump = false;
+			commandBullet = false;
+
+			if (bulletDuration > 0.0f) {
+				bulletDuration -= Time.deltaTime;
+				if (bulletDuration <= 0.0f) {
+					commandBullet = true;
+					bulletDuration = this.enemyParam.bulletDuration;
+				}
+			}
+
+			if (jumpDuration > 0.0f) {
+				jumpDuration -= Time.deltaTime;
+				if (jumpDuration <= 0.0f) {
+					commandJump = true;
+					jumpDuration = this.enemyParam.jumpDuration;
+				}
+			}
 
 			base.Update ();
 		}
 
-		new public void damaged(int damage)
+		override public void damaged(int damage) 
 		{
 			print ("Enemy Damaged! : " + damage);
-//			Destroy (this.gameObject);
+			this.hp -= damage;
+			if (this.hp <= 0)
+			{
+				Destroy(this.gameObject);
+			}
 		}
 	}
 }

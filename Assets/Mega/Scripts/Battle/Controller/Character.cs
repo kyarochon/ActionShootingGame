@@ -6,33 +6,36 @@ namespace Mega.Battle.Controller {
 	public class Character : MonoBehaviour {
 		public GameObject bulletPrefab;
 
-		protected Direction2D moveDirection;
-		protected Direction2D faceDirection;
+		protected Direction2D moveDirection = Direction2D.None;
+		protected Direction2D faceDirection = Direction2D.Right;
 
 		protected bool commandJump;
 		protected bool commandBullet;
-
+		protected bool isGround;
 
 		protected float upForce = 500.0f;
 		protected float turnForce = 500.0f;
+
+		protected int hp = 1;
+		protected int attack = 1;
+
 		protected Rigidbody myRigidbody;
 
 		// Use this for initialization
-		protected void Start () {
+		virtual protected void Start () {
 			myRigidbody = this.GetComponent<Rigidbody> ();
 
-			moveDirection = Direction2D.None;
-			faceDirection = Direction2D.Right;
 			commandJump = false;
+			isGround = true;
 		}
 
 		// Update is called once per frame
-		protected void Update () {
+		virtual protected void Update () {
 			// 移動
 			this.move ();
 
 			// ジャンプ
-			if (commandJump) {
+			if (commandJump && isGround) {
 				this.myRigidbody.AddForce (this.transform.up * this.upForce);
 			}
 
@@ -76,11 +79,22 @@ namespace Mega.Battle.Controller {
 		}
 
 
-
-		public void damaged(int damage)
+		virtual public void damaged(int damage)
 		{
 			print ("Character Damaged! : " + damage);
 		}
+
+
+		void OnTriggerEnter()
+		{
+			//isGround = true;
+		}
+
+		void OnTriggerExit()
+		{
+			//isGround = false;
+		}
+
 	}
 }
 

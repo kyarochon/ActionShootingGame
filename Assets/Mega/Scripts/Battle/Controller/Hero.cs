@@ -4,13 +4,8 @@ using System.Collections;
 namespace Mega.Battle.Controller {
 	
 	public class Hero : Character {
-
-		new void Start () {
-			base.Start ();
-		}
-
 		// Update is called once per frame
-		new void Update () {
+		override protected void Update () {
 			// キー入力に応じて方向を変更
 			if (Input.GetKey (KeyCode.RightArrow)) {
 				moveDirection = Direction2D.Right;
@@ -37,7 +32,7 @@ namespace Mega.Battle.Controller {
 			base.Update ();
 		}
 
-		new public void damaged(int damage)
+		override public void damaged(int damage)
 		{
 			print ("Hero Damaged! : " + damage);
 		}
