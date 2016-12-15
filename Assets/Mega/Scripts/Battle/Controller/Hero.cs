@@ -4,8 +4,15 @@ using System.Collections;
 namespace Mega.Battle.Controller {
 	
 	public class Hero : Character {
-		// Update is called once per frame
-		override protected void Update () {
+		override protected void Start()
+		{
+			this.upForce = 750.0f;
+			base.Start ();
+		}
+
+
+		override protected void Update ()
+		{
 			// キー入力に応じて方向を変更
 			if (Input.GetKey (KeyCode.RightArrow)) {
 				moveDirection = Direction2D.Right;
@@ -16,7 +23,7 @@ namespace Mega.Battle.Controller {
 			}
 
 			// ジャンプ処理
-			if (Input.GetKeyDown (KeyCode.Space)/* && this.transform.position.y <= 0.0f*/) {
+			if (Input.GetKeyDown (KeyCode.Space)) {
 				commandJump = true;
 			} else {
 				commandJump = false;

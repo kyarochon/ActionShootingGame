@@ -87,12 +87,16 @@ namespace Mega.Battle.Controller {
 
 		void OnTriggerEnter()
 		{
-			//isGround = true;
+		}
+
+		void OnTriggerStay(Collider collider)
+		{
+			isGround = true;
 		}
 
 		void OnTriggerExit()
 		{
-			//isGround = false;
+			isGround = false;
 		}
 
 	}
