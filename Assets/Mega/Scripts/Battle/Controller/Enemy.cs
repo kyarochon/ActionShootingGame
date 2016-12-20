@@ -4,26 +4,22 @@ using System.Collections;
 namespace Mega.Battle.Controller {
 
 	public class Enemy : Character {
-
-
 		protected float moveDuration   = 0.0f;
 		protected float jumpDuration   = 0.0f;
 		protected float bulletDuration = 0.0f;
 		protected EnemyParam enemyParam;
 
 		public void Init(EnemyParam param) {
-			faceDirection = Direction2D.Left;
+			// EnemyInfo初期化
+			Info.Enemy enemyInfo = new Info.Enemy ();
+			enemyInfo.Init (param);
+			this.characterInfo = enemyInfo;
 
 			this.enemyParam = param;
-			this.hp = param.hp;
-			this.attack = param.attack;
-			this.upForce = param.upForce;
-			this.turnForce = param.turnForce;
-			this.transform.localScale = new Vector3 (param.scale, param.scale, param.scale);
-
 			this.moveDuration   = param.moveDuration;
 			this.jumpDuration   = param.jumpDuration;
 			this.bulletDuration = param.bulletDuration;
+			this.faceDirection = Direction2D.Left;
 		}
 			
 		protected override void Update () {
@@ -60,10 +56,16 @@ namespace Mega.Battle.Controller {
 		override public void damaged(int damage) 
 		{
 			print ("Enemy Damaged! : " + damage);
-			this.hp -= damage;
-			if (this.hp <= 0)
+
+			int currentHp = this.characterInfo.getCurrentHp() - damage;
+			if (currentHp < 0)
+				currentHp = 0;
+			this.characterInfo.setCurrentHp (currentHp);
+
+
+			if (currentHp <= 0)
 			{
-				Destroy(this.gameObject);
+				Destroy (this.gameObject);
 			}
 		}
 	}

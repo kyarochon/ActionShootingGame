@@ -13,12 +13,7 @@ namespace Mega.Battle.Controller {
 		protected bool commandBullet;
 		protected bool isGround;
 
-		protected float upForce = 500.0f;
-		protected float turnForce = 500.0f;
-
-		protected int hp = 1;
-		protected int attack = 1;
-
+		protected Info.Character characterInfo;
 		protected Rigidbody myRigidbody;
 
 		// Use this for initialization
@@ -36,7 +31,7 @@ namespace Mega.Battle.Controller {
 
 			// ジャンプ
 			if (commandJump && isGround) {
-				this.myRigidbody.AddForce (this.transform.up * this.upForce);
+				this.myRigidbody.AddForce (this.transform.up * this.characterInfo.getUpForce ());
 			}
 
 			// 弾を打つ
@@ -61,7 +56,7 @@ namespace Mega.Battle.Controller {
 				// 移動(右)
 				case Direction2D.Right:
 				{
-					this.myRigidbody.AddForce (0, 0, this.turnForce);
+					this.myRigidbody.AddForce (0, 0, this.characterInfo.getTurnForce ());
 					this.transform.rotation = Quaternion.Euler (0.0f, 0.0f, 0.0f);
 					this.faceDirection = Direction2D.Right;
 					break;
@@ -70,7 +65,7 @@ namespace Mega.Battle.Controller {
 				// 移動(左)
 				case Direction2D.Left:
 				{
-					this.myRigidbody.AddForce (0, 0, -this.turnForce);
+					this.myRigidbody.AddForce (0, 0, -this.characterInfo.getTurnForce ());
 					this.transform.rotation = Quaternion.Euler (0.0f, 180.0f, 0.0f);
 					this.faceDirection = Direction2D.Left;
 					break;

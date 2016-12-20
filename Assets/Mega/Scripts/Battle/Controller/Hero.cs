@@ -6,7 +6,13 @@ namespace Mega.Battle.Controller {
 	public class Hero : Character {
 		override protected void Start()
 		{
-			this.upForce = 750.0f;
+			// TODO: 初期化処理はInit関数に移す
+			// HeroInfo初期化
+			Info.Hero heroInfo = new Info.Hero ();
+			heroInfo.Init ();
+			this.characterInfo = heroInfo;
+
+
 			base.Start ();
 		}
 
