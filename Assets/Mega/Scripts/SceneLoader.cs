@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour {
 
 
 	void Start () {
-		SceneManager.LoadScene ("GameScene", LoadSceneMode.Additive);
-		stageScene = SceneManager.GetSceneByName ("GameScene");
+		SceneManager.LoadScene ("GameStageScene_02", LoadSceneMode.Additive);
+		stageScene = SceneManager.GetSceneByName ("GameStageScene_02");
 	}
 }
