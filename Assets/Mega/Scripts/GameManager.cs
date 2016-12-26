@@ -9,5 +9,8 @@ public class GameManager : MonoBehaviour {
 	void Start () {
 		SceneManager.LoadScene ("GameScene", LoadSceneMode.Additive);
 		stageScene = SceneManager.GetSceneByName("GameScene");
+
+
+
 	}
 }
