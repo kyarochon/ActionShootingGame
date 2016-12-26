@@ -1,9 +1,18 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 namespace Mega.Battle.Info {
 	abstract public class Character {
 		public abstract void setCurrentHp (int hp);
+
+
+		public void damaged(int damage)
+		{
+			int currentHp = this.getCurrentHp () - damage;
+			if (currentHp < 0) {
+				currentHp = 0;
+			}
+			
+			this.setCurrentHp (currentHp);
+		}
 
 		public abstract int getMaxHp ();
 		public abstract int getCurrentHp ();

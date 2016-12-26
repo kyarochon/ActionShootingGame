@@ -55,16 +55,9 @@ namespace Mega.Battle.Controller {
 
 		override public void damaged(int damage) 
 		{
-			print ("Enemy Damaged! : " + damage);
+			base.damaged (damage);
 
-			int currentHp = this.characterInfo.getCurrentHp() - damage;
-			if (currentHp < 0)
-				currentHp = 0;
-			this.characterInfo.setCurrentHp (currentHp);
-
-
-			if (currentHp <= 0)
-			{
+			if (this.characterInfo.getCurrentHp () <= 0) {
 				Destroy (this.gameObject);
 			}
 		}

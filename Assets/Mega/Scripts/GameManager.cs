@@ -1,16 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
+﻿
+namespace Mega{
+	public class GameManager {
+		private static GameManager gameManager;
 
-public class GameManager : MonoBehaviour {
-	private Scene stageScene;
+		private GameManager ()
+		{
 
+		}
 
-	void Start () {
-		SceneManager.LoadScene ("GameScene", LoadSceneMode.Additive);
-		stageScene = SceneManager.GetSceneByName("GameScene");
-
-
+		public static GameManager Instance 
+		{
+			get {
+				if( gameManager == null ) gameManager = new GameManager();
+				return gameManager;
+			}
+		}
 
 	}
+
 }

@@ -2,31 +2,32 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class UIController : MonoBehaviour {
-	// UIコントローラ
-	public GameObject hpText;
-	public GameObject gameManagerObj;
+namespace Mega {
+	public class UIController : MonoBehaviour {
+		// UIコントローラ
+		public GameObject hpText;
 
-	// ゲームマネージャ
-	private GameManager gameManager;
+		private Battle.Info.Hero heroInfo;
+
+		void Awake()
+		{
+			this.heroInfo = Battle.Info.Hero.Instance;
+		}
+
+		void Update ()
+		{
+			// 情報に変動があれば表示更新
+			if (heroInfo.hasUpdatedInfo()) {
+				this.updateHpText ();
+			}
+		}
 
 
+		public void updateHpText()
+		{
+			hpText.GetComponent<Text> ().text = "HP：" + heroInfo.getCurrentHp ();
+		}
 
-	void Start ()
-	{
-		this.gameManager = this.GetComponent<GameManager> ();
+
 	}
-
-
-	void Update ()
-	{
-	}
-
-
-	public void updateHpText()
-	{
-		//		hpText.GetComponent<Text>().text = "hogehoge";
-	}
-
-
 }

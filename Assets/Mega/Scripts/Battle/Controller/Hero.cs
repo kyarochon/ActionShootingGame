@@ -8,11 +8,7 @@ namespace Mega.Battle.Controller {
 		{
 			// TODO: 初期化処理はInit関数に移す
 			// HeroInfo初期化
-			Info.Hero heroInfo = new Info.Hero ();
-			heroInfo.Init ();
-			this.characterInfo = heroInfo;
-
-
+			this.characterInfo = Info.Hero.Instance;
 			base.Start ();
 		}
 
@@ -47,7 +43,9 @@ namespace Mega.Battle.Controller {
 
 		override public void damaged(int damage)
 		{
-			print ("Hero Damaged! : " + damage);
+			base.damaged (damage);
+
+			// TODO 死亡時の処理
 		}
 	}
 }

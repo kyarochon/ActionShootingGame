@@ -76,7 +76,7 @@ namespace Mega.Battle.Controller {
 
 		virtual public void damaged(int damage)
 		{
-			print ("Character Damaged! : " + damage);
+			this.characterInfo.damaged (damage);
 		}
 
 

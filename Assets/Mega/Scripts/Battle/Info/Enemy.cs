@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 namespace Mega.Battle.Info {
 	public class Enemy : Character {
 		private EnemyParam param;
