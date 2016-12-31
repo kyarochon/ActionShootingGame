@@ -21,6 +21,7 @@ namespace Mega.Battle.Info {
 		public abstract float getUpForce ();
 		public abstract float getTurnForce ();
 		public abstract float getScale();
+		public abstract float getMaxSpeed();
 	}
 
 }

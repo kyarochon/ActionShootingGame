@@ -3,20 +3,20 @@ using System.Collections;
 
 namespace Mega.Battle.Controller {
 	public class Bullet : MonoBehaviour {
-		protected float lifeTime = 2.0f;		// 生存秒数
-		protected float speed    = 1000.0f;		// 速度
-		protected int damage   = 10;		// 当たった時のダメージ
+		protected float lifeTime 	 = 2.0f;	// 生存秒数
+		protected float DefaultSpeed = 3000.0f;	// 速度
+		protected int damage   		 = 10;		// 当たった時のダメージ
 
 
 		public void init(Direction2D direction, Vector3 position) {
+			float speed = DefaultSpeed;
 			switch (direction) {
 			case Direction2D.Right:
-				speed = 1000.0f;
-				this.transform.position = position + new Vector3 (0, 1.0f, 1.0f);
+				this.transform.position = position + new Vector3 (0, 3.0f, 1.0f);
 				break;
 			case Direction2D.Left:
-				speed = -1000.0f;
-				this.transform.position = position + new Vector3 (0, 1.0f, -1.0f);
+				this.transform.position = position + new Vector3 (0, 3.0f, -1.0f);
+				this.transform.Rotate (new Vector3 (0,180,0));
 				break;
 			case Direction2D.None:
 				speed = 0.0f;
@@ -24,7 +24,7 @@ namespace Mega.Battle.Controller {
 				break;
 			}
 
-			this.GetComponent<Rigidbody> ().AddForce (transform.forward * speed);
+			this.GetComponent<Rigidbody> ().AddForce (transform.right * speed);
 		}
 
 

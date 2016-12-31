@@ -7,8 +7,8 @@ namespace Mega.Battle.Info {
 		private int currentHp = 1000;
 		private int attack = 1;
 		private int defense = 0;
-		private float upForce = 750.0f;
-		private float turnForce = 500.0f;
+		private float upForce = 2000.0f;
+		private float turnForce = 150.0f;
 		private float scale = 1.0f;
 		private bool updatedInfo = false;
 
@@ -77,6 +77,11 @@ namespace Mega.Battle.Info {
 		public override float getScale()
 		{
 			return scale;
+		}
+
+		public override float getMaxSpeed()
+		{
+			return 30.0f;
 		}
 	}
 }

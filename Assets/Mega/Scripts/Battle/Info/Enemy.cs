@@ -53,6 +53,11 @@ namespace Mega.Battle.Info {
 		{
 			return param.scale;
 		}
+
+		public override float getMaxSpeed()
+		{
+			return 20.0f;
+		}
 	}
 
 }
