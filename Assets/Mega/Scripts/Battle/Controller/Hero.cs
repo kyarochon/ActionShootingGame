@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DG.Tweening;
 
 namespace Mega.Battle.Controller {
 	
 	public class Hero : Character {
+		private float invincibleTime = 0.0f;
+		private bool isVisible = true;
+
 		override protected void Start()
 		{
 			// TODO: 初期化処理はInit関数に移す
@@ -15,6 +19,20 @@ namespace Mega.Battle.Controller {
 
 		override protected void Update ()
 		{
+			// 死亡していたら何も出来ない
+			if (this.characterInfo.getCurrentHp() <= 0) {
+				return;
+			}
+
+
+			// 無敵時間を減らす
+			if (invincibleTime > 0.0f) {
+				invincibleTime -= Time.deltaTime;
+				if (invincibleTime <= 0.0f) {
+					invincibleTime = 0.0f;
+				}
+			}
+
 			// キー入力に応じて方向を変更
 			if (Input.GetKey (KeyCode.RightArrow)) {
 				moveDirection = Direction2D.Right;
@@ -41,11 +59,53 @@ namespace Mega.Battle.Controller {
 			base.Update ();
 		}
 
+
+		// Collision
+		override protected void OnCollisionEnter(Collision col)
+		{
+			if (col.gameObject.tag == "Enemy") {
+				this.damaged (10);
+			}
+			base.OnCollisionEnter (col);
+		}
+
+		override protected void OnCollisionExit(Collision col) {
+			base.OnCollisionExit (col);
+		}
+
+
+
+
 		override public void damaged(int damage)
 		{
+			// 無敵時間中はダメージを受けない
+			if (invincibleTime > 0.0f) {
+				return;
+			}
+
+			invincibleTime = 2.0f;
+			StartCoroutine (invincibleBlink ());
 			base.damaged (damage);
 
 			// TODO 死亡時の処理
+		}
+
+
+
+		IEnumerator invincibleBlink()
+		{
+			while (invincibleTime > 0.0f) {
+				if (this.isVisible) {
+					this.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+				} else {
+					this.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
+				}
+				this.isVisible = !this.isVisible;
+
+				yield return new WaitForSeconds (0.1f);
+			}
+
+			this.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
 		}
 	}
 }

@@ -6,6 +6,7 @@ namespace Mega {
 	public class UIController : MonoBehaviour {
 		// UIコントローラ
 		public GameObject hpText;
+		public GameObject centerText;
 
 		private Battle.Info.Hero heroInfo;
 
@@ -25,7 +26,15 @@ namespace Mega {
 
 		public void updateHpText()
 		{
-			hpText.GetComponent<Text> ().text = "HP：" + heroInfo.getCurrentHp ();
+			int currentHp = heroInfo.getCurrentHp ();
+			int maxHp = heroInfo.getMaxHp ();
+			this.hpText.GetComponent<Text> ().text = " HP：" + currentHp + " / " + maxHp;
+
+			// ゲームオーバー
+			if (currentHp <= 0) {
+				this.centerText.GetComponent<Text> ().text = "GAME OVER";
+			}
+
 		}
 
 

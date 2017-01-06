@@ -5,6 +5,9 @@ namespace Mega.Battle.Controller {
 
 	public class Character : MonoBehaviour {
 		public GameObject bulletPrefab;
+		public GameObject model;
+		private GameObject bulletObject = null;
+
 
 		protected Direction2D moveDirection = Direction2D.None;
 		protected Direction2D faceDirection = Direction2D.Right;
@@ -20,7 +23,7 @@ namespace Mega.Battle.Controller {
 		// Use this for initialization
 		virtual protected void Start () {
 			myRigidbody = this.GetComponent<Rigidbody> ();
-			myAnimator = this.transform.FindChild ("model").gameObject.GetComponent<Animator> ();
+			myAnimator = this.model.GetComponent<Animator> ();
 
 			commandJump = false;
 			isGround = true;
@@ -38,9 +41,9 @@ namespace Mega.Battle.Controller {
 
 
 			// 弾を打つ
-			if (commandBullet) {
-				GameObject bullet = Instantiate (bulletPrefab) as GameObject;
-				Bullet bulletScript = bullet.GetComponent<Bullet> ();
+			if (commandBullet && bulletObject == null) {
+				bulletObject = Instantiate (bulletPrefab) as GameObject;
+				Bullet bulletScript = bulletObject.GetComponent<Bullet> ();
 				bulletScript.init (faceDirection, this.transform.position);
 			}
 
@@ -89,14 +92,6 @@ namespace Mega.Battle.Controller {
 				this.myRigidbody.velocity = velocity;
 			}
 
-/*
-			Vector3 velocity = this.myRigidbody.velocity;
-			velocity.y = 0.0f;
-			if (velocity.magnitude > maxSpeed)
-			{
-				myRigidbody.velocity = Vector3.ClampMagnitude (myRigidbody.velocity, maxSpeed);
-			}
-			*/
 		}
 
 
@@ -107,18 +102,20 @@ namespace Mega.Battle.Controller {
 
 
 		// Collision
-		void OnCollisionEnter(Collision col)
+		virtual protected void OnCollisionEnter(Collision col)
 		{
 			if (col.gameObject.tag == "MoveStage") {
 				transform.SetParent (col.transform);
 			}
 		}
 
-		void OnCollisionExit(Collision col) {
+		virtual protected void OnCollisionExit(Collision col) {
 			if (col.gameObject.tag == "MoveStage") {
 				transform.SetParent (null);
 			}
 		}
+
+
 
 		// Trigger
 		void OnTriggerEnter()

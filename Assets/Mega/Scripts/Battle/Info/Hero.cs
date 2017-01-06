@@ -3,14 +3,14 @@ namespace Mega.Battle.Info {
 	public class Hero : Character {
 		private static Hero heroInfo = null;
 
-		private int maxHp = 1000;
-		private int currentHp = 1000;
+		private int maxHp = 100;
+		private int currentHp = 100;
 		private int attack = 1;
 		private int defense = 0;
 		private float upForce = 2000.0f;
 		private float turnForce = 150.0f;
 		private float scale = 1.0f;
-		private bool updatedInfo = false;
+		private bool updatedInfo = true;
 
 		private Hero()
 		{

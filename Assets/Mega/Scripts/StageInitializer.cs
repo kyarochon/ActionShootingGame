@@ -27,8 +27,9 @@ namespace Mega{
 			// Enemyの取得
 
 
+			// GameManagerに登録
+			GameManager.Instance.setStageInitializer(this);
 		}
-
 
 		void Update()
 		{
@@ -52,6 +53,12 @@ namespace Mega{
 			}
 
 			this.transform.position = pos;
+		}
+
+		public void restartStage()
+		{
+			// 位置を初期化
+			hero.transform.position = new Vector3(0.0f, 0.0f, 125.0f);
 		}
 
 	}
