@@ -10,7 +10,7 @@ namespace Mega{
 
 		void Awake() {
 			// 最初のステージを読み込み
-			GameManager.Instance.transitionNextScene ();
+			GameManager.Instance.showLoadingScene ();
 		}
 	}
 }

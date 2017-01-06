@@ -31,6 +31,11 @@ namespace Mega{
 			GameManager.Instance.setStageInitializer(this);
 		}
 
+		void Start()
+		{
+			GameManager.Instance.hideLoadingScene ();
+		}
+
 		void Update()
 		{
 			// カメラ位置調整

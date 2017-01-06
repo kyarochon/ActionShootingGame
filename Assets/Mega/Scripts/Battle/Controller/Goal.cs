@@ -8,7 +8,7 @@ namespace Mega.Battle.Controller {
 		void OnTriggerEnter()
 		{
 			// 次のシーンに移行
-			GameManager.Instance.transitionNextScene();
+			GameManager.Instance.showLoadingScene();
 		}
 	}
 }

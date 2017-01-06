@@ -13,8 +13,17 @@ namespace Mega{
 
 		private static GameManager gameManager;
 		private int stageSceneIndex = 0;
+		private string loadSceneName = "";
 		private string unloadSceneName = "";
 		private StageInitializer stageInitializer = null;
+
+
+		// フェード用
+		private Texture2D blackTexture;
+		private float fadeAlpha = 0;
+		private bool isFading = false;
+
+
 
 		public static GameManager Instance 
 		{
@@ -22,23 +31,36 @@ namespace Mega{
 				if (gameManager == null) {
 					GameObject gameObject = new GameObject("GameManager");
 					gameManager = gameObject.AddComponent<GameManager>();
+					gameManager.init ();
 				}
 				return gameManager;
 			}
 		}
 
 
-		private GameManager ()
+		private GameManager (){}
+		private void init()
 		{
 			this.stageSceneIndex = 0;
+			this.loadSceneName = "";
 			this.unloadSceneName = "";
+
+			// 黒テクスチャ生成
+			this.blackTexture = new Texture2D (32, 32, TextureFormat.RGB24, false);
+			this.blackTexture.ReadPixels (new Rect (0, 0, 32, 32), 0, 0, false);
+			this.blackTexture.SetPixel (0, 0, Color.white);
+			this.blackTexture.Apply ();
 		}
 
 
 		// 現在のシーン名を取得
 		private string getCurrentSceneName()
 		{
-			return "GameStageScene_0" + this.stageSceneIndex;
+			if (this.stageSceneIndex > 0) {
+				return "GameStageScene_0" + this.stageSceneIndex;
+			} else {
+				return "";
+			}
 		}
 
 
@@ -46,23 +68,36 @@ namespace Mega{
 		public void setStageInitializer(StageInitializer initialiser)
 		{
 			this.stageInitializer = initialiser;
+		//	this.hideLoadingScene ();
 		}
 
-		// 次のステージに移行
+
+		// フェードアウト＆ロード画面表示
+		public void showLoadingScene()
+		{
+			StartCoroutine (FadeOut (1.0f));
+		}
+
+		// シーンを切り替え
 		public void transitionNextScene()
 		{
 			// 最後のシーンなら最初からやり直し
 			if (this.stageSceneIndex == MAX_SCENE_INDEX) {
 				this.restartCurrentScene ();
+				this.hideLoadingScene ();
 				return;
 			}
 
-			// 次フレームで今のシーンを破棄
+			// 次フレームでステージシーン切り替え
 			this.unloadSceneName = getCurrentSceneName();
-
-			// 次のシーンを読み込み
 			this.stageSceneIndex++;
-			SceneManager.LoadScene (getCurrentSceneName(), LoadSceneMode.Additive);
+			this.loadSceneName = getCurrentSceneName ();
+		}
+
+		// フェードイン＆ロード画面非表示
+		public void hideLoadingScene()
+		{
+			StartCoroutine (FadeIn (1.0f));
 		}
 
 
@@ -78,10 +113,63 @@ namespace Mega{
 
 		void Update()
 		{
+			if (this.loadSceneName.Length > 0) {
+				print ("nextscene load");
+				SceneManager.LoadScene (getCurrentSceneName(), LoadSceneMode.Additive);
+				this.loadSceneName = "";
+			}
+
 			if (this.unloadSceneName.Length > 0) {
+				print ("prevscene unload");
 				SceneManager.UnloadScene (unloadSceneName);
 				this.unloadSceneName = "";
 			}
+		}
+
+
+		void OnGUI()
+		{
+			if (!this.isFading)
+				return;
+
+			//透明度を更新して黒テクスチャを描画
+			GUI.color = new Color (0, 0, 0, this.fadeAlpha);
+			GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), this.blackTexture);
+		}
+
+
+		private IEnumerator FadeOut (float interval)
+		{
+			// だんだん暗く
+			this.isFading = true;
+			float time = 0;
+			while (time <= interval) {
+				this.fadeAlpha = Mathf.Lerp (0f, 1f, time / interval);      
+				time += Time.deltaTime;
+				yield return 0;
+			}
+
+			// ロード画面を表示
+			SceneManager.LoadScene ("LoadingScene", LoadSceneMode.Additive);
+		}
+
+
+		private IEnumerator FadeIn (float interval)
+		{
+			yield return new WaitForSeconds (0.5f);
+
+			// ロード画面を非表示
+			SceneManager.UnloadScene("LoadingScene");
+
+			//だんだん明るく
+			float time = 0;
+			while (time <= interval) {
+				this.fadeAlpha = Mathf.Lerp (1f, 0f, time / interval);
+				time += Time.deltaTime;
+				yield return 0;
+			}
+			this.isFading = false;
+
 		}
 
 	}
