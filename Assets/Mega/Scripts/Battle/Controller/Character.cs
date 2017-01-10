@@ -6,6 +6,7 @@ namespace Mega.Battle.Controller {
 	public class Character : MonoBehaviour {
 		public GameObject bulletPrefab;
 		public GameObject model;
+		public GameObject hitEffect;
 		private GameObject bulletObject = null;
 
 
@@ -97,7 +98,16 @@ namespace Mega.Battle.Controller {
 
 		virtual public void damaged(int damage)
 		{
+			// HP変動
 			this.characterInfo.damaged (damage);
+		}
+
+		protected void playHitEffect()
+		{
+			// ヒットエフェクト再生
+			GameObject effect = Instantiate (this.hitEffect, transform.position, Quaternion.identity) as GameObject;
+			effect.transform.localPosition = transform.position + new Vector3 (0.0f, 1.5f, 0.0f);
+			Destroy (effect, 0.3f);
 		}
 
 

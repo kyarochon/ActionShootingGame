@@ -88,6 +88,10 @@ namespace Mega.Battle.Controller {
 			base.damaged (damage);
 
 			// TODO 死亡時の処理
+			if (this.characterInfo.getCurrentHp () <= 0) {
+				this.playHitEffect ();
+			}
+
 		}
 
 

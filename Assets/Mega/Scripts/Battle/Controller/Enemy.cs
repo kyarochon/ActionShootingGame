@@ -57,6 +57,7 @@ namespace Mega.Battle.Controller {
 		{
 			base.damaged (damage);
 
+			this.playHitEffect ();
 			if (this.characterInfo.getCurrentHp () <= 0) {
 				Destroy (this.gameObject);
 			}
