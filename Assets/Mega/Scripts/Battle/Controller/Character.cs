@@ -19,12 +19,12 @@ namespace Mega.Battle.Controller {
 
 		protected Info.Character characterInfo;
 		protected Rigidbody myRigidbody;
-		protected Animator myAnimator;
+		protected Mega.Battle.Controller.Model modelController;
 
 		// Use this for initialization
 		virtual protected void Start () {
 			myRigidbody = this.GetComponent<Rigidbody> ();
-			myAnimator = this.model.GetComponent<Animator> ();
+			modelController = model.GetComponent<Mega.Battle.Controller.Model> ();
 
 			commandJump = false;
 			isGround = true;
@@ -49,8 +49,8 @@ namespace Mega.Battle.Controller {
 			}
 
 			// アニメーション遷移
-			this.myAnimator.SetBool ("Jump", !isGround);
-			this.myAnimator.SetFloat ("Speed", this.myRigidbody.velocity.magnitude);
+			this.modelController.setIsJump(!isGround);
+			this.modelController.setSpeed (this.myRigidbody.velocity.magnitude);
 		}
 
 		protected void move()

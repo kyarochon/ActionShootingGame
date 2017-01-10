@@ -99,17 +99,13 @@ namespace Mega.Battle.Controller {
 		IEnumerator invincibleBlink()
 		{
 			while (invincibleTime > 0.0f) {
-				if (this.isVisible) {
-					this.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
-				} else {
-					this.transform.localScale = new Vector3 (0.1f, 0.1f, 0.1f);
-				}
+				this.modelController.setIsVisible (this.isVisible);
 				this.isVisible = !this.isVisible;
 
 				yield return new WaitForSeconds (0.1f);
 			}
 
-			this.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+			this.modelController.setIsVisible (true);
 		}
 	}
 }
