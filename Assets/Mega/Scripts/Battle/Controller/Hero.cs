@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.UI;
 
 namespace Mega.Battle.Controller {
 	
 	public class Hero : Character {
 		private float invincibleTime = 0.0f;
 		private bool isVisible = true;
+		private bool isLeftButtonDown   = false;
+		private bool isRightButtonDown  = false;
+		private bool isJumpButtonDown   = false;
+		private bool isAttackButtonDown = false;
 
 		override protected void Start()
 		{
@@ -34,27 +39,29 @@ namespace Mega.Battle.Controller {
 			}
 
 			// キー入力に応じて方向を変更
-			if (Input.GetKey (KeyCode.RightArrow)) {
+			if (Input.GetKey (KeyCode.RightArrow) || isRightButtonDown) {
 				moveDirection = Direction2D.Right;
-			} else if (Input.GetKey (KeyCode.LeftArrow)) {
+			} else if (Input.GetKey (KeyCode.LeftArrow) || isLeftButtonDown) {
 				moveDirection = Direction2D.Left;
 			} else {
 				moveDirection = Direction2D.None;
 			}
 
 			// ジャンプ処理
-			if (Input.GetKeyDown (KeyCode.Space)) {
+			if (Input.GetKeyDown (KeyCode.Space) || isJumpButtonDown) {
 				commandJump = true;
 			} else {
 				commandJump = false;
 			}
+			isJumpButtonDown = false;
 
 			// 弾を撃つ
-			if (Input.GetKeyDown (KeyCode.Z)) {
+			if (Input.GetKeyDown (KeyCode.Z) || isAttackButtonDown) {
 				commandBullet = true;
 			} else {
 				commandBullet = false;
 			}
+			isAttackButtonDown = false;
 
 			base.Update ();
 		}
@@ -107,5 +114,12 @@ namespace Mega.Battle.Controller {
 
 			this.modelController.setIsVisible (true);
 		}
+
+		public void GetLeftButtonDown()   { print ("left!!");this.isLeftButtonDown   = true;  }
+		public void GetLeftButtonUp()     { print ("left!!");this.isLeftButtonDown   = false; }
+		public void GetRightButtonDown()  { print ("left!!");this.isRightButtonDown  = true;  }
+		public void GetRightButtonUp()    { print ("left!!");this.isRightButtonDown  = false; }
+		public void GetUpButtonDown()     { print ("left!!");this.isJumpButtonDown   = true;  }
+		public void GetAttackButtonDown() { print ("left!!");this.isAttackButtonDown = true;  }
 	}
 }
