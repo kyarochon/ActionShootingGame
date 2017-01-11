@@ -3,10 +3,9 @@ using System.Collections;
 
 namespace Mega.Battle.Controller {
 	public class Bullet : MonoBehaviour {
-		protected float lifeTime 	 = 1.0f;	// 生存秒数
-		protected float DefaultSpeed = 3000.0f;	// 速度
-		protected int damage   		 = 10;		// 当たった時のダメージ
-
+		public float lifeTime 	  = 1.0f;		// 生存秒数
+		public float DefaultSpeed = 3000.0f;	// 速度
+		public int damage   	  = 10;			// 当たった時のダメージ
 
 		public void init(Direction2D direction, Vector3 position) {
 			float speed = DefaultSpeed;

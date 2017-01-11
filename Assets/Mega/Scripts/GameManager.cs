@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 namespace Mega{
 	public class GameManager : MonoBehaviour{
-		private const int MAX_SCENE_INDEX = 2;
+		private const int MAX_SCENE_INDEX = 3;
 
 		private static GameManager gameManager;
 		private int stageSceneIndex = 0;
@@ -71,6 +71,11 @@ namespace Mega{
 		//	this.hideLoadingScene ();
 		}
 
+
+		public bool isTransitioningScene()
+		{
+			return this.isFading;
+		}
 
 		// フェードアウト＆ロード画面表示
 		public void showLoadingScene()

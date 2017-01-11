@@ -25,7 +25,15 @@ namespace Mega.Battle.Controller {
 		override protected void Update ()
 		{
 			// 死亡していたら何も出来ない
-			if (this.characterInfo.getCurrentHp() <= 0) {
+			if (!this.characterInfo.isAlive ()) {
+				
+				// ジャンプor攻撃ボタンを押したらリスタート
+				if (Input.GetKeyDown (KeyCode.Space) || isJumpButtonDown || Input.GetKeyDown (KeyCode.Z) || isAttackButtonDown){
+					this.modelController.setIsVisible (true);
+					this.characterInfo.setCurrentHp (100);
+					GameManager.Instance.restartCurrentScene ();
+				}
+
 				return;
 			}
 
@@ -85,18 +93,22 @@ namespace Mega.Battle.Controller {
 
 		override public void damaged(int damage)
 		{
-			// 無敵時間中はダメージを受けない
-			if (invincibleTime > 0.0f) {
+			// 無敵時間中or既に死んでいる場合にはダメージを受けない
+			if (invincibleTime > 0.0f || !this.characterInfo.isAlive()) {
 				return;
 			}
 
-			invincibleTime = 2.0f;
-			StartCoroutine (invincibleBlink ());
 			base.damaged (damage);
 
-			// TODO 死亡時の処理
-			if (this.characterInfo.getCurrentHp () <= 0) {
+			// 生存時：無敵時間に入る
+			if (this.characterInfo.isAlive ()) {
+				invincibleTime = 2.0f;
+				StartCoroutine (invincibleBlink ());
+
+			// 死亡時：エフェクトを出して非表示に
+			} else {
 				this.playHitEffect ();
+				this.modelController.setIsVisible (false);
 			}
 
 		}

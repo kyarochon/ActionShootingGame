@@ -14,6 +14,11 @@ namespace Mega.Battle.Info {
 			this.setCurrentHp (currentHp);
 		}
 
+		public bool isAlive()
+		{
+			return this.getCurrentHp() > 0;
+		}
+
 		public abstract int getMaxHp ();
 		public abstract int getCurrentHp ();
 		public abstract int getAttack ();

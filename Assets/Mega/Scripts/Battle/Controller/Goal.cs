@@ -7,6 +7,11 @@ namespace Mega.Battle.Controller {
 		// ゴールに触れたらステージクリア
 		void OnTriggerEnter()
 		{
+			// シーン遷移中は何もしない
+			if (GameManager.Instance.isTransitioningScene ()) {
+				return;
+			}
+
 			// 次のシーンに移行
 			GameManager.Instance.showLoadingScene();
 		}

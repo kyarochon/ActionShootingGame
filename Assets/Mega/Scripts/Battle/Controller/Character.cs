@@ -32,6 +32,11 @@ namespace Mega.Battle.Controller {
 
 		// Update is called once per frame
 		virtual protected void Update () {
+			// シーン遷移中は何も出来ない
+			if (GameManager.Instance.isTransitioningScene ()) {
+				return;
+			}
+
 			// 移動
 			this.move ();
 
