@@ -23,9 +23,7 @@ namespace Mega{
 			Vector3 position = new Vector3(0.0f, 0.0f, 125.0f);
 			Quaternion rotation = new Quaternion (0.0f, 0.0f, 0.0f, 0.0f);
 			hero = Instantiate (heroPrefab, position, rotation) as GameObject;
-
-			// Enemyの取得
-
+			GameManager.Instance.moveGameObjectToCurrentScene (hero);
 
 			// GameManagerに登録
 			GameManager.Instance.setStageInitializer(this);

@@ -16,7 +16,7 @@ namespace Mega{
 		private string loadSceneName = "";
 		private string unloadSceneName = "";
 		private StageInitializer stageInitializer = null;
-
+		private Scene currentScene;
 
 		// フェード用
 		private Texture2D blackTexture;
@@ -119,13 +119,12 @@ namespace Mega{
 		void Update()
 		{
 			if (this.loadSceneName.Length > 0) {
-				print ("nextscene load");
 				SceneManager.LoadScene (getCurrentSceneName(), LoadSceneMode.Additive);
+				this.currentScene = SceneManager.GetSceneByName (this.loadSceneName);
 				this.loadSceneName = "";
 			}
 
 			if (this.unloadSceneName.Length > 0) {
-				print ("prevscene unload");
 				SceneManager.UnloadScene (unloadSceneName);
 				this.unloadSceneName = "";
 			}
@@ -175,6 +174,12 @@ namespace Mega{
 			}
 			this.isFading = false;
 
+		}
+
+
+		public void moveGameObjectToCurrentScene(GameObject gameObject)
+		{
+			SceneManager.MoveGameObjectToScene (gameObject, this.currentScene);
 		}
 
 	}

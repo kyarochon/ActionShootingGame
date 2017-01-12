@@ -32,6 +32,8 @@ namespace Mega.Battle {
 					GameObject enemy = Instantiate (enemyPrefab, transform.position, transform.rotation) as GameObject;
 					enemy.GetComponent<Mega.Battle.Controller.Enemy> ().Init (enemyParam);
 					existEnemyList [i] = enemy;
+
+					GameManager.Instance.moveGameObjectToCurrentScene (enemy);
 					return;
 				}
 			}

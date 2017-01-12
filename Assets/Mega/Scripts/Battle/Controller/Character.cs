@@ -49,6 +49,7 @@ namespace Mega.Battle.Controller {
 			// 弾を打つ
 			if (commandBullet && bulletObject == null) {
 				bulletObject = Instantiate (bulletPrefab) as GameObject;
+				GameManager.Instance.moveGameObjectToCurrentScene (bulletObject);
 				Bullet bulletScript = bulletObject.GetComponent<Bullet> ();
 				bulletScript.init (faceDirection, this.transform.position);
 			}
