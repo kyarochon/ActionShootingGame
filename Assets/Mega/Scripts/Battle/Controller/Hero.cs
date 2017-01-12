@@ -127,11 +127,11 @@ namespace Mega.Battle.Controller {
 			this.modelController.setIsVisible (true);
 		}
 
-		public void GetLeftButtonDown()   { print ("left!!");this.isLeftButtonDown   = true;  }
-		public void GetLeftButtonUp()     { print ("left!!");this.isLeftButtonDown   = false; }
-		public void GetRightButtonDown()  { print ("left!!");this.isRightButtonDown  = true;  }
-		public void GetRightButtonUp()    { print ("left!!");this.isRightButtonDown  = false; }
-		public void GetUpButtonDown()     { print ("left!!");this.isJumpButtonDown   = true;  }
-		public void GetAttackButtonDown() { print ("left!!");this.isAttackButtonDown = true;  }
+		public void LeftButtonDown()   { this.isLeftButtonDown   = true;  }
+		public void LeftButtonUp()     { this.isLeftButtonDown   = false; }
+		public void RightButtonDown()  { this.isRightButtonDown  = true;  }
+		public void RightButtonUp()    { this.isRightButtonDown  = false; }
+		public void UpButtonDown()     { this.isJumpButtonDown   = true;  }
+		public void AttackButtonDown() { this.isAttackButtonDown = true;  }
 	}
 }

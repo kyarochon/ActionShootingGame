@@ -182,6 +182,14 @@ namespace Mega{
 			SceneManager.MoveGameObjectToScene (gameObject, this.currentScene);
 		}
 
+
+		// ボタンイベント
+		public void LeftButtonDown()   { this.stageInitializer.LeftButtonDown (); }
+		public void LeftButtonUp()     { this.stageInitializer.LeftButtonUp (); }
+		public void RightButtonDown()  { this.stageInitializer.RightButtonDown ();  }
+		public void RightButtonUp()    { this.stageInitializer.RightButtonUp (); }
+		public void UpButtonDown()     { this.stageInitializer.UpButtonDown ();  }
+		public void AttackButtonDown() { print ("A!");this.stageInitializer.AttackButtonDown ();  }
 	}
 
 }

@@ -58,5 +58,13 @@ namespace Mega {
 			return text;
 		}
 
+
+		// ボタンイベント
+		public void LeftButtonDown()   { GameManager.Instance.LeftButtonDown (); }
+		public void LeftButtonUp()     { GameManager.Instance.LeftButtonUp (); }
+		public void RightButtonDown()  { GameManager.Instance.RightButtonDown ();  }
+		public void RightButtonUp()    { GameManager.Instance.RightButtonUp (); }
+		public void UpButtonDown()     { GameManager.Instance.UpButtonDown ();  }
+		public void AttackButtonDown() { GameManager.Instance.AttackButtonDown ();  }
 	}
 }

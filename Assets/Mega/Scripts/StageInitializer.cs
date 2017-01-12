@@ -11,6 +11,7 @@ namespace Mega{
 		public GameObject heroPrefab;
 
 		private GameObject hero;
+		private Mega.Battle.Controller.Hero heroController;
 		private Vector3 cameraPos;
 
 		// ステージの初期化処理はすべてここで行う
@@ -24,6 +25,9 @@ namespace Mega{
 			Quaternion rotation = new Quaternion (0.0f, 0.0f, 0.0f, 0.0f);
 			hero = Instantiate (heroPrefab, position, rotation) as GameObject;
 			GameManager.Instance.moveGameObjectToCurrentScene (hero);
+
+			// コントローラを保持
+			heroController = hero.GetComponent<Mega.Battle.Controller.Hero>();
 
 			// GameManagerに登録
 			GameManager.Instance.setStageInitializer(this);
@@ -64,6 +68,12 @@ namespace Mega{
 			hero.transform.position = new Vector3(0.0f, 0.0f, 125.0f);
 		}
 
+		public void LeftButtonDown()   { this.heroController.LeftButtonDown (); }
+		public void LeftButtonUp()     { this.heroController.LeftButtonUp (); }
+		public void RightButtonDown()  { this.heroController.RightButtonDown ();  }
+		public void RightButtonUp()    { this.heroController.RightButtonUp (); }
+		public void UpButtonDown()     { this.heroController.UpButtonDown ();  }
+		public void AttackButtonDown() { this.heroController.AttackButtonDown ();  }
 	}
 
 }
