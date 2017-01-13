@@ -12,6 +12,8 @@ namespace Mega{
 		private const int MAX_SCENE_INDEX = 3;
 
 		private static GameManager gameManager;
+
+		// シーン切り替え用
 		private int stageSceneIndex = 0;
 		private string loadSceneName = "";
 		private string unloadSceneName = "";
@@ -23,6 +25,9 @@ namespace Mega{
 		private float fadeAlpha = 0;
 		private bool isFading = false;
 
+		// グローバルデータ
+		private int score = 0;
+		public bool hasUpdatedScore = true;
 
 
 		public static GameManager Instance 
@@ -176,10 +181,25 @@ namespace Mega{
 
 		}
 
-
 		public void moveGameObjectToCurrentScene(GameObject gameObject)
 		{
 			SceneManager.MoveGameObjectToScene (gameObject, this.currentScene);
+		}
+
+
+		public void addScore(int score)
+		{
+			this.score += score;
+			if (this.score < 0) {
+				score = 0;
+			}
+			hasUpdatedScore = true;
+		}
+
+		public int getScore()
+		{
+			hasUpdatedScore = false;
+			return score;
 		}
 
 

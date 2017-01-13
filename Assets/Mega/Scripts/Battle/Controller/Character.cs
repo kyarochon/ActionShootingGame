@@ -7,6 +7,7 @@ namespace Mega.Battle.Controller {
 		public GameObject bulletPrefab;
 		public GameObject model;
 		public GameObject hitEffect;
+		public GameObject getCoinEffect;
 		private GameObject bulletObject = null;
 
 
@@ -113,7 +114,17 @@ namespace Mega.Battle.Controller {
 			// ヒットエフェクト再生
 			GameObject effect = Instantiate (this.hitEffect, transform.position, Quaternion.identity) as GameObject;
 			effect.transform.localPosition = transform.position + new Vector3 (0.0f, 1.5f, 0.0f);
+			GameManager.Instance.moveGameObjectToCurrentScene (effect);
 			Destroy (effect, 0.3f);
+		}
+
+		protected void playGetCoinEffect()
+		{
+			// コイン取得エフェクト再生
+			GameObject effect = Instantiate (this.getCoinEffect, transform.position, Quaternion.identity) as GameObject;
+			effect.transform.localPosition = transform.position + new Vector3 (0.0f, 10.0f, 0.0f);
+			GameManager.Instance.moveGameObjectToCurrentScene (effect);
+			Destroy (effect, 1.0f);
 		}
 
 
@@ -134,19 +145,25 @@ namespace Mega.Battle.Controller {
 
 
 		// Trigger
-		void OnTriggerEnter()
+		void OnTriggerEnter(Collider other)
 		{
-			isGround = true;
+			if (other.gameObject.tag == "Stage" || other.gameObject.tag == "MoveStage") {
+				isGround = true;
+			}
 		}
 
-		void OnTriggerStay(Collider collider)
+		void OnTriggerStay(Collider other)
 		{
-			isGround = true;
+			if (other.gameObject.tag == "Stage" || other.gameObject.tag == "MoveStage") {
+				isGround = true;
+			}
 		}
 
-		void OnTriggerExit()
+		void OnTriggerExit(Collider other)
 		{
-			isGround = false;
+			if (other.gameObject.tag == "Stage" || other.gameObject.tag == "MoveStage") {
+				isGround = false;
+			}
 		}
 
 	}

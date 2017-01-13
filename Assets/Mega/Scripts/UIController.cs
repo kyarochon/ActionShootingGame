@@ -8,6 +8,8 @@ namespace Mega {
 		public GameObject hpText;
 		public GameObject shadowHpText;
 		public GameObject centerText;
+		public GameObject scoreText;
+		public GameObject shadowScoreText;
 
 		private Battle.Info.Hero heroInfo;
 
@@ -19,13 +21,16 @@ namespace Mega {
 		void Update ()
 		{
 			// 情報に変動があれば表示更新
-			if (heroInfo.hasUpdatedInfo()) {
+			if (heroInfo.hasUpdatedInfo ()) {
 				this.updateHpText ();
+			}
+			if (GameManager.Instance.hasUpdatedScore) {
+				this.updateScoreText ();
 			}
 		}
 
 
-		public void updateHpText()
+		private void updateHpText()
 		{
 			// HP表示更新
 			string text = this.getHpText ();
@@ -38,7 +43,14 @@ namespace Mega {
 			} else {
 				this.centerText.GetComponent<Text> ().text = "";
 			}
+		}
 
+		private void updateScoreText()
+		{
+			// スコア表示更新
+			int score = GameManager.Instance.getScore();
+			this.scoreText.GetComponent<Text> ().text = score.ToString ();
+			this.shadowScoreText.GetComponent<Text> ().text = score.ToString ();
 		}
 
 
@@ -57,7 +69,6 @@ namespace Mega {
 			}
 			return text;
 		}
-
 
 		// ボタンイベント
 		public void LeftButtonDown()   { GameManager.Instance.LeftButtonDown (); }

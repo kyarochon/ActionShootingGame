@@ -59,6 +59,7 @@ namespace Mega.Battle.Controller {
 
 			this.playHitEffect ();
 			if (this.characterInfo.getCurrentHp () <= 0) {
+				GameManager.Instance.addScore (50);
 				Destroy (this.gameObject);
 			}
 		}
